@@ -2,9 +2,9 @@
 
 A BepInEx plugin which aims to backport the original enemy front/back row mechanics used in the SNES/GBA/PS1 versions of Final Fantasy V to the Pixel Remaster.
 
-## Features
-
-TODO:
+## Details
+* FFV Pixel seems to determine enemy row using the same 3x3 enemy grid that I-IV use.
+* FFV SNES/GBA/PS1 uses a more nuanced formula where an enemy's X position and sprite width are used to determine if it is in line with the frontmost enemy.
 
 ## Installation
 
@@ -19,5 +19,6 @@ TODO:
 1. Run the game once to generate the config file, change the config in `(GAME_PATH)\BepInEx\config\FF5PR.EnemyRowFix.cfg` and restart the game.
 
 ## Notes
-
-TODO:
+* The SNES/GBA/PS1 versions have enemies and sprite widths aligned to 8px tile boundaries, while Pixel has no such limitations.
+* Enemy formations on Pixel often differ in subtle ways.
+* To make enemy row behavior match the original 100% would probably required adjusting the X positions of all the enemy groups.

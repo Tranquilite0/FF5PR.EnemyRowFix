@@ -16,24 +16,24 @@ namespace FF5PR.EnemyRowFix.Patches
     public static class TestPatches
     {
         //------- SerialBattleUtility -------
-        [HarmonyPatch(typeof(SerialBattleUtility), nameof(SerialBattleUtility.GetCorpsIdEnemy))]
-        [HarmonyPrefix]
-        static void GetCorpsIdEnemyPre(SerialBattleUtility __instance, int uniqueId)
-        {
-            Plugin.Log.LogInfo($"Begin: {typeof(SerialBattleUtility).FullName}.{nameof(SerialBattleUtility.GetCorpsIdEnemy)}({uniqueId})");
-        }
+        //[HarmonyPatch(typeof(SerialBattleUtility), nameof(SerialBattleUtility.GetCorpsIdEnemy))]
+        //[HarmonyPrefix]
+        //static void GetCorpsIdEnemyPre(SerialBattleUtility __instance, int uniqueId)
+        //{
+        //    Plugin.Log.LogInfo($"Begin: {typeof(SerialBattleUtility).FullName}.{nameof(SerialBattleUtility.GetCorpsIdEnemy)}({uniqueId})");
+        //}
 
-        [HarmonyPatch(typeof(SerialBattleUtility), nameof(SerialBattleUtility.GetCorpsIdEnemy))]
-        [HarmonyPostfix]
-        static void GetCorpsIdEnemyPost(SerialBattleUtility __instance, ref CorpsId __result, int uniqueId)
-        {
-            if(__result == CorpsId.Back)
-            {
-                Plugin.Log.LogInfo($"Forcing enemy {uniqueId} into Front");
-                __result = CorpsId.Front;
-            }
-            Plugin.Log.LogInfo($"  End: {typeof(SerialBattleUtility).FullName}.{nameof(SerialBattleUtility.GetCorpsIdEnemy)}({uniqueId})->{__result}");
-        }
+        //[HarmonyPatch(typeof(SerialBattleUtility), nameof(SerialBattleUtility.GetCorpsIdEnemy))]
+        //[HarmonyPostfix]
+        //static void GetCorpsIdEnemyPost(SerialBattleUtility __instance, ref CorpsId __result, int uniqueId)
+        //{
+        //    if(__result == CorpsId.Back)
+        //    {
+        //        Plugin.Log.LogInfo($"Forcing enemy {uniqueId} into Front");
+        //        __result = CorpsId.Front;
+        //    }
+        //    Plugin.Log.LogInfo($"  End: {typeof(SerialBattleUtility).FullName}.{nameof(SerialBattleUtility.GetCorpsIdEnemy)}({uniqueId})->{__result}");
+        //}
 
         //------- BattleUtility -------
         //[HarmonyPatch(typeof(BattleUtility), nameof(BattleUtility.GetTime))]

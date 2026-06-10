@@ -28,13 +28,19 @@ namespace FF5PR.EnemyRowFix
             }
 
             // Plugin startup logic
-            Log = base.Log;
             Log.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
         }
 
         private static void ApplyPatches()
         {
-            ApplyPatch(typeof(TestPatches), GameVersion.FF5);
+            if(!Config.PluginEnabled.Value)
+            {
+                Log.LogInfo("Applying no patches (plugin disabled).");
+                return;
+            }
+
+            //ApplyPatch(typeof(TestPatches), GameVersion.FF5);
+            ApplyPatch(typeof(EnemyRowPatches), GameVersion.FF5);
 
             Log.LogInfo("Patches applied!");
         }

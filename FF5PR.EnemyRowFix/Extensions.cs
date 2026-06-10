@@ -5,6 +5,7 @@ using Last.Management;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using UnityEngine;
 
 namespace FF5PR.EnemyRowFix
@@ -31,5 +32,13 @@ namespace FF5PR.EnemyRowFix
 
             return "<unknown unit>";
         }
+
+        /// <summary>
+        /// Gets enemy unit position. Appears to be the same even if you are ambushed.
+        /// </summary>
+        /// <param name="enemyData"></param>
+        /// <returns></returns>
+        public static UnityEngine.Vector2 GetEnemyPos(this BattleEnemyData enemyData) =>
+            BattlePlugManager.instance.InstantiateManager.battleEnemyInstanceData.GetEnemyPos(enemyData.UniqueId);
     }
 }
