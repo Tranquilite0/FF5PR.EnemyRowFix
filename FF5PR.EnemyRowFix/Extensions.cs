@@ -38,7 +38,39 @@ namespace FF5PR.EnemyRowFix
         /// </summary>
         /// <param name="enemyData"></param>
         /// <returns></returns>
-        public static UnityEngine.Vector2 GetEnemyPos(this BattleEnemyData enemyData) =>
+        public static UnityEngine.Vector2 GetPos(this BattleEnemyData enemyData) =>
             BattlePlugManager.instance.InstantiateManager.battleEnemyInstanceData.GetEnemyPos(enemyData.UniqueId);
+
+        /// <summary>
+        /// Gets X position of the middle of enemy sprite. Should be the same even if you are ambushed.
+        /// </summary>
+        /// <param name="enemyData"></param>
+        /// <returns></returns>
+        public static float GetCenterX(this BattleEnemyData enemyData) =>
+            BattlePlugManager.instance.InstantiateManager.battleEnemyInstanceData.GetEnemyPos(enemyData.UniqueId).x +
+            (enemyData.BattleUnitDataInfo.BattleSpriteEntity.CharacterSR.Width / 2.0f);
+
+        public static int GetWidth(this BattleEnemyData enemyData) =>
+            enemyData.BattleUnitDataInfo.BattleSpriteEntity.CharacterSR.Width;
+
+        /// <summary>
+        /// Gets an enemy's effective X position (X + sprite width).
+        /// </summary>
+        /// <param name="enemyData"></param>
+        /// <returns></returns>
+        public static int GetEffectiveX(this BattleEnemyData enemyData)
+        {
+            var width = enemyData.BattleUnitDataInfo.BattleSpriteEntity.CharacterSR.Width;
+
+            //Kludge fix to put Neo Exdeath parts in the right row.
+            if (width < 20)
+            {
+                //TODO: remove log or find a better kludge.
+                Plugin.Log.LogWarning($"Enemy=({enemyData.UniqueId}) {enemyData.GetUnitName()}: Width ({width}) less than 20.");
+                width = 20;
+            }
+            return (int)enemyData.GetPos().x + width;
+        }
+
     }
 }
