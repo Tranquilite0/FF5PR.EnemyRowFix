@@ -42,35 +42,40 @@ namespace FF5PR.EnemyRowFix
             BattlePlugManager.instance.InstantiateManager.battleEnemyInstanceData.GetEnemyPos(enemyData.UniqueId);
 
         /// <summary>
-        /// Gets X position of the middle of enemy sprite. Should be the same even if you are ambushed.
+        /// Gets X position of the middle of enemy sprite.
         /// </summary>
         /// <param name="enemyData"></param>
         /// <returns></returns>
-        public static float GetCenterX(this BattleEnemyData enemyData) =>
+        public static float GetXCenter(this BattleEnemyData enemyData) =>
             BattlePlugManager.instance.InstantiateManager.battleEnemyInstanceData.GetEnemyPos(enemyData.UniqueId).x +
-            (enemyData.BattleUnitDataInfo.BattleSpriteEntity.CharacterSR.Width / 2.0f);
-
-        public static int GetWidth(this BattleEnemyData enemyData) =>
-            enemyData.BattleUnitDataInfo.BattleSpriteEntity.CharacterSR.Width;
+            //Center x is typically zero, but use it anyway in case sprite anchor differs for some enemy.
+            enemyData.BattleUnitDataInfo.BattleSpriteEntity.CharacterSR.bounds.center.x; 
 
         /// <summary>
-        /// Gets an enemy's effective X position (X + sprite width).
+        /// Gets X position of minimum (left edge) of enemy sprite.
         /// </summary>
         /// <param name="enemyData"></param>
         /// <returns></returns>
-        public static int GetEffectiveX(this BattleEnemyData enemyData)
-        {
-            var width = enemyData.BattleUnitDataInfo.BattleSpriteEntity.CharacterSR.Width;
+        public static float GetXMin(this BattleEnemyData enemyData) =>
+            BattlePlugManager.instance.InstantiateManager.battleEnemyInstanceData.GetEnemyPos(enemyData.UniqueId).x +
+            enemyData.BattleUnitDataInfo.BattleSpriteEntity.CharacterSR.bounds.min.x;
 
-            //Kludge fix to put Neo Exdeath parts in the right row.
-            if (width < 20)
-            {
-                //TODO: remove log or find a better kludge.
-                Plugin.Log.LogWarning($"Enemy=({enemyData.UniqueId}) {enemyData.GetUnitName()}: Width ({width}) less than 20.");
-                width = 20;
-            }
-            return (int)enemyData.GetPos().x + width;
-        }
+        /// <summary>
+        /// Gets X position of maximum (right edge) of enemy sprite.
+        /// </summary>
+        /// <param name="enemyData"></param>
+        /// <returns></returns>
+        public static float GetXMax(this BattleEnemyData enemyData) =>
+            BattlePlugManager.instance.InstantiateManager.battleEnemyInstanceData.GetEnemyPos(enemyData.UniqueId).x +
+            enemyData.BattleUnitDataInfo.BattleSpriteEntity.CharacterSR.bounds.max.x;
+
+        /// <summary>
+        /// Gets width of enemy sprite.
+        /// </summary>
+        /// <param name="enemyData"></param>
+        /// <returns></returns>
+        public static int GetWidth(this BattleEnemyData enemyData) =>
+            enemyData.BattleUnitDataInfo.BattleSpriteEntity.CharacterSR.Width;
 
     }
 }
