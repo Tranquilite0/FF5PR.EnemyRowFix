@@ -14,6 +14,10 @@ namespace FF5PR.EnemyRowFix.Patches
     public static class EnemyRowPatches
     {
         private const int NeoExdeathPartyId = 608;
+        /// <summary>
+        /// Use X tolerance of 8 px to roughly simulate 8px wide tiles.
+        /// </summary>
+        private const float XTolerance = 8.0f;
 
         [HarmonyPatch(typeof(SerialBattleUtility), nameof(SerialBattleUtility.GetCorpsIdEnemy))]
         [HarmonyPostfix]
@@ -35,7 +39,7 @@ namespace FF5PR.EnemyRowFix.Patches
             Plugin.Log.LogInfo($"TargetEnemy=({uniqueId}) {targetEnemy.GetUnitName()}: Pos: {targetEnemy.GetPos()} W,MaxX: {targetEnemy.GetWidth()},{targetEnemy.GetXMax()}");
             Plugin.Log.LogInfo($"ForwardMost=({forwardMost.UniqueId}) {forwardMost.GetUnitName()}: Pos: {forwardMost.GetPos()} W,MinX: {forwardMost.GetWidth()},{forwardMost.GetXMin()}");
 
-            var corpsId = targetEnemy.GetXMax() >= xMin ? CorpsId.Front : CorpsId.Back;
+            var corpsId = xMin - targetEnemy.GetXMax() < XTolerance ? CorpsId.Front : CorpsId.Back;
             if (__result != corpsId)
             {
                 Plugin.Log.LogInfo($"Changing enemy {uniqueId} CorpsId from {__result} to {corpsId}");
