@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using Last.Battle;
 using Last.Defaine.User;
-using Last.Management;
 using Serial.FF5.Management;
 using System;
 using System.Collections.Generic;

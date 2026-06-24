@@ -12,8 +12,6 @@ public sealed class ModComponent(IntPtr ptr) : MonoBehaviour(ptr)
 {
     public static ModComponent Instance { get; private set; }
 
-    //public BattleDelayState CurrentBattleDelayState = new();
-
     public static bool Inject()
     {
         ClassInjector.RegisterTypeInIl2Cpp<ModComponent>();
